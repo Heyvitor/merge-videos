@@ -1,21 +1,22 @@
 {
-    "version": 2,
-  
-    "builds": [
-      {
-        "package": {
-          "type": "docker",
-          "name": "n8n-api"
-        },
-        "targets": [
-          {
-            "context": {
-              "cmd": ["docker-compose", "-f", "./docker-compose.yml"]
-            },
-            "onStart": ["waitUntilServiceReady"]
-          }
-        ]
-      }
-    ]
-
+    "build": {
+      "builder": "nixpacks",
+      "buildCommand": "pip install -r requirements.txt",
+      "watchPatterns": [
+        "**/*.py",
+        "requirements.txt",
+        "web/**/*"
+      ]
+    },
+    "deploy": {
+      "startCommand": "python main.py",
+      "restartPolicy": "on-failure",  
+      "restartPolicyMaxRetries": 10
+    },
+    "healthcheck": {
+      "path": "/",
+      "intervalSeconds": 30,
+      "timeoutSeconds": 10,
+      "retries": 3
+    }
   }
