@@ -1,9 +1,9 @@
-version: '3'
+version: '3.8'
+
 services:
-  n8n-api:
-    image: nixos/nixpkgs:latest
+  app:
+    build: .
+    ports:
+      - "8000:8000"
     volumes:
-      - ./n8n-api:/app
-    environment:
-      DRIVE_URL: "https://www.googleapis.com/drive/v3/files"
-    command: bash -c "python main.py && docker-compose up --build"
+      - /tmp:/tmp
