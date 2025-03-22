@@ -1,18 +1,9 @@
 version: '3'
 services:
-  api:
-    build: .
-    ports:
-      - "8000:8000"
-    depends_on:
-      - google-drive
-    environment:
-      - Drive_URL="https://www.googleapis.com/drive/v3/files"
-
-  google-drive:
-    image: google/golang-org:alpine
+  n8n-api:
+    image: nixos/nixpkgs:latest
     volumes:
-      - ./google_drive.sh:/go/bin/google_drive.sh
-
-  ffmpeg:
-    image: ffmpeg/ffmpeg:4.2
+      - ./n8n-api:/app
+    environment:
+      DRIVE_URL: "https://www.googleapis.com/drive/v3/files"
+    command: bash -c "python main.py && docker-compose up --build"
