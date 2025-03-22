@@ -1,0 +1,21 @@
+{
+    "version": 2,
+  
+    "builds": [
+      {
+        "package": {
+          "type": "docker",
+          "name": "n8n-api"
+        },
+        "targets": [
+          {
+            "context": {
+              "cmd": ["docker-compose", "-f", "./docker-compose.yml"]
+            },
+            "onStart": ["waitUntilServiceReady"]
+          }
+        ]
+      }
+    ]
+
+  }
